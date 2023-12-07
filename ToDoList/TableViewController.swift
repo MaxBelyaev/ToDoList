@@ -9,9 +9,30 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
+    @IBAction func pushEditAction(_ sender: Any) {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
+    
     @IBAction func pushAddAction(_ sender: Any) {
-        addItem(nameItem: "New Item")
-        tableView.reloadData()
+        let alertController = UIAlertController(title: "Create new item", message: "Message", preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.placeholder = "New item name"
+        }
+        let alertAction1 = UIAlertAction(title: "Cancel", style: .default) { (alert) in
+            
+            
+        }
+        
+        let alertAction2 = UIAlertAction(title: "Create", style: .cancel) { (alert) in
+            let newItem = alertController.textFields![0].text
+            addItem(nameItem: newItem!)
+            self.tableView.reloadData()
+            
+        }
+        
+        alertController.addAction(alertAction1)
+        alertController.addAction(alertAction2)
+        present(alertController, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -33,13 +54,13 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return ToDoItems.count
+        return toDoItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        let currentItem = ToDoItems[indexPath.row]
+        let currentItem = toDoItems[indexPath.row]
         cell.textLabel?.text = currentItem["Name"] as? String
         
         if (currentItem["isCompleted"] as? Bool) == true {
@@ -78,12 +99,14 @@ class TableViewController: UITableViewController {
     }
     
     
-    /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        
+        moveItem(fromIndex: fromIndexPath.row, toIndex: to.row)
+        
+        tableView.reloadData()
     }
-    */
+    
 
     /*
     // Override to support conditional rearranging of the table view.

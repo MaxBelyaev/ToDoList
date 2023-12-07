@@ -7,32 +7,36 @@
 
 import Foundation
 
-var ToDoItems: [[String: Any]] = [
-    ["Name": "Позвонить маме", "isCompleted": true],
-    ["Name": "Дописать прилажение", "isCompleted": false],
-    ["Name": "Побегать голым на морозе", "isCompleted": false]
-]
+var toDoItems: [[String: Any]] {
+    set {
+        UserDefaults.standard.set(newValue, forKey: "ToDoDataKey")
+        UserDefaults.standard.synchronize()
+    }
+    
+    get {
+        if let array = UserDefaults.standard.array(forKey: "ToDoDataKey") as? [[String: Any]] {
+            return array
+        } else {
+            return []
+        }
+    }
+}
 
 func addItem(nameItem: String, isCompleted: Bool = false) {
-    ToDoItems.append(["Name": nameItem, "isCompleted": isCompleted])
-    saveData()
+    toDoItems.append(["Name": nameItem, "isCompleted": isCompleted])
 }
 
 func removeItem(at index: Int) {
-    ToDoItems.remove(at: index)
-    saveData()
+    toDoItems.remove(at: index)
 }
 
 func changeState(at item: Int) -> Bool {
-    ToDoItems[item]["isCompleted"] = !(ToDoItems[item]["isCompleted"] as! Bool)
-    saveData()
-    return ToDoItems[item]["isCompleted"] as! Bool
+    toDoItems[item]["isCompleted"] = !(toDoItems[item]["isCompleted"] as! Bool)
+    return toDoItems[item]["isCompleted"] as! Bool
 }
 
-func saveData() {
-    print("Данные сохранены")
-}
-
-func loadData() {
-    
+func moveItem(fromIndex: Int, toIndex: Int) {
+    let from = toDoItems[fromIndex]
+    toDoItems.remove(at: fromIndex)
+    toDoItems.insert(from, at: toIndex)
 }

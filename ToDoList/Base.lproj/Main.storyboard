@@ -40,12 +40,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ToDo Items" id="CVO-ij-ubb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="oGM-Dv-RL2">
-                            <color key="tintColor" systemColor="systemMintColor"/>
-                            <connections>
-                                <action selector="pushAddAction:" destination="86H-8s-Aec" id="Hze-Yc-YYe"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="oGM-Dv-RL2">
+                                <color key="tintColor" systemColor="systemMintColor"/>
+                                <connections>
+                                    <action selector="pushAddAction:" destination="86H-8s-Aec" id="Hze-Yc-YYe"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="edit" id="h8x-e9-F8p">
+                                <connections>
+                                    <action selector="pushEditAction:" destination="86H-8s-Aec" id="R60-jy-m1i"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NPU-Ng-5v0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
